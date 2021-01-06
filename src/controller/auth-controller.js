@@ -72,7 +72,6 @@ exports.register_post = [
             res.json(AppUtils.reponseErrorWithValid(errors));
         }
         else{
-
             var exitUser = await User.findOne({ email: req.body.email }).exec();
             if(exitUser){
                 return res.json(AppUtils.reponseError("Địa chỉ email này đã tồn tại!"));
@@ -81,9 +80,12 @@ exports.register_post = [
                 return res.json(AppUtils.reponseError("Vui lòng xác nhận đúng mật khẩu!"));
             }
 
+            const avatar = process.env.AVATAR_DEFAUT;
+
             var user = new User({
                 email: req.body.email,
                 fullName: req.body.name,
+                avatar: avatar,
                 active: true,
                 role: 'user'
             });
@@ -99,3 +101,10 @@ exports.register_post = [
         }
     }
 ];
+
+// Handler request get profile by token
+exports.me_post = async function(req, res, next) {
+    var user = req.user;
+    if(user) return res.json(AppUtils.reponseSuccess(user));
+    else return res.json(AppUtils.reponseError("Tài khoản không xác định!"));
+};

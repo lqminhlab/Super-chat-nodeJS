@@ -10,7 +10,12 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
-    
+	
+    <!-- Jquery -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.min.js"></script>
+	
     <!-- My css -->
     <link rel="stylesheet" href="./stylesheets/style.css">
     <link rel="stylesheet" href="./stylesheets/loader-style.css">
@@ -20,6 +25,16 @@
 		<div class="body-chat container-fluid h-100">
 			<div class="row justify-content-center h-100">
 				<div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
+					<div class="d-flex bd-highlight m-4">
+						<div class="img_cont">
+							<img id="user-avatar" src="" class="rounded-circle user_img">
+							<span class="online_icon"></span>
+						</div>
+						<div class="user_info">
+							<span id="user-name"></span>
+							<p id="user-status">Online</p>
+						</div>
+					</div>
 					<div class="card-header">
 						<div class="input-group">
 							<input type="text" placeholder="Search..." name="" class="form-control search">
@@ -137,7 +152,7 @@
 									<span class="msg_time_send">8:55 AM, Today</span>
 								</div>
 								<div class="img_cont_msg">
-                  <div class="dot-spin"></div>
+                  					<div class="dot-spin"></div>
 								</div>
 							</div>
 							<div class="d-flex justify-content-start mb-4">
@@ -205,7 +220,10 @@
 			<span class="loader"><span class="loader-inner"></span></span>
 		</div>
 	</body>
-  <!-- My scripts -->
-  <script type="text/javascript" src="./javascripts/static-action-script.js"></script>
-  <script type="text/javascript" src="./javascripts/script.js"></script>
+	<!--Socket.io scirpt-->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.3/socket.io.js"></script>
+    <!-- My scripts -->
+    <script src="./javascripts/auth-scrip.js"></script>
+    <script type="text/javascript" src="./javascripts/static-action-script.js"></script>
+    <script type="text/javascript" src="./javascripts/chat-script.js"></script>
 </html>

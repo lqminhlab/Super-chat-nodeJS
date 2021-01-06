@@ -21,17 +21,15 @@ $(document).ready(function(){
             }
             $('.main').hide();
             $(".loader-wrapper").fadeIn("fast", ()=>{
-                $.post(`${url}`, params, (data, status)=>{
-                    console.log("DATA:", data);
+                $.post(`${urlOrigin}/api/login`, params, (res, status)=>{
+                    console.log("DATA:", res);
                     setTimeout(()=>{
-                        if(data.status){
-                            $(".loader-wrapper").fadeOut("fast", ()=>{
-                                $('#msg-error').text(data.msg);
-                                $('.main').fadeIn();
-                            });
+                        if(res.status){
+                            if(remember) Cookies.set('accessToken', res.data.accessToken, { expires: 30 });
+                            window.location.replace(`${urlOrigin}`);
                         }else{
                             $(".loader-wrapper").fadeOut("fast", ()=>{
-                                $('#msg-error').text(data.msg);
+                                $('#msg-error').text(res.msg);
                                 $('.main').fadeIn();
                             });
                         }

@@ -23,7 +23,7 @@ $(document).ready(function(){
             }
             $('.main').hide();
             $(".loader-wrapper").fadeIn("fast", ()=>{
-                $.post(`${url}`, params, (data, status)=>{
+                $.post(`${urlOrigin}/api/register`, params, (data, status)=>{
                     console.log("DATA:", data);
                     setTimeout(()=>{
                         if(data.status){

@@ -15,6 +15,7 @@ const UserSchema = mongoose.Schema({
         },
         required: [true, "Email is required!"]
     },
+    avatar : {type: String},
     passwordHash : {type: String, required: true},
     fullName: { type: String, required: true },
     active: { type: Boolean, default: true, required: true },
