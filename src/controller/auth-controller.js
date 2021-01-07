@@ -4,7 +4,6 @@ var AppUtils = require('../util/app_utils');
 const bcrypt = require('bcrypt');
 
 const { body,validationResult } = require('express-validator');
-const e = require('express');
 
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE;
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;

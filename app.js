@@ -65,6 +65,7 @@ async function verifyTokenSocket(socket) {
         //-----------------------------------------------------
         //Login thành công khởi tạo các control
         socket.userInfo = user;
+        socket.emit('connect_verified', user);
         // socket.tokenInfo = normalToken.decodeToken(accessToken)
         // initSocketControl(socket)
         // initChallengeFindTheSame(socket)
