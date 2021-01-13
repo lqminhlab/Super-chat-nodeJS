@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 var FriendSchema = new mongoose.Schema({
     state: {required: true, type: String, enum: ['request', 'block', "friend", "none"], default: 'none',},
-    people: {type: [mongoose.Schema.Types.ObjectId], required: true, unique: true},
+    people: [{type: mongoose.Schema.Types.ObjectId, ref: "User", required: true, unique: true}],
     requestor: {type: mongoose.Schema.Types.ObjectId},
     acceptTime: {type: Date, default: new Date()},
     intimate: {type: Number, default: 0}

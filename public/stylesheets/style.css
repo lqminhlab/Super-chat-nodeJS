@@ -83,7 +83,6 @@ background-color: rgba(0,0,0,0.3) !important;
 .contacts li{
   width: 100% !important;
   padding: 5px 10px;
-  margin-bottom: 15px !important;
 }
 .active{
   background-color: rgba(0,0,0,0.3);
@@ -190,11 +189,11 @@ font-size: 20px;
 }
 .action_menu{
 z-index: 1;
-position: absolute;
-padding: 15px 0;
-background-color: rgba(0,0,0,0.5);
+/* position: absolute; */
+padding: 5px 0;
+background-color: rgba(0,0,0,0.8);
 color: white;
-border-radius: 15px;
+border-radius: 10px;
 top: 30px;
 right: 15px;
 display: none;
@@ -206,12 +205,10 @@ margin: 0;
 }
 .action_menu ul li{
 width: 100%;
-padding: 10px 15px;
-margin-bottom: 5px;
+padding: 6px 15px;
 }
 .action_menu ul li i{
-padding-right: 10px;
-
+padding-right: 8px;
 }
 .action_menu ul li:hover{
 cursor: pointer;

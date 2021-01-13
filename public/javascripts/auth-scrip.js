@@ -22,14 +22,12 @@ async function getProfile(){
     }
 }
 
-async function requestAjax(url, type){
+async function requestAjax(url, type, data){
     const accessToken = Cookies.get('accessToken');
     return $.ajax({
         url: url,
         headers: { 'x_authorization': accessToken },
-        data: {
-           format: 'json'
-        }, 
+        data: data, 
         async: true,
         type: type
      })

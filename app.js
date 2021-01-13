@@ -7,6 +7,8 @@ var mongoDB = require('./src/database/mongo_db');
 var http = require('http');
 var AppUtils = require('./src/util/app_utils');
 var User = require('./src/model/user');
+var RoomManager = require('./src/socket/room-manager');
+var SocketControl = require('./src/socket/socket-control');
 
 var webRouter = require('./src/routes/index');
 var apiRouter = require('./src/routes/api');
@@ -15,10 +17,13 @@ var app = express();
 var server = http.createServer(app);
 
 const io = require('socket.io')(server);
-io.on('connection', client => { 
-    verifyTokenSocket(client);
-    client.on("disconnect", () => {
-        console.log(`On Disconnect: ${client.userInfo.fullName}`);
+io.roomManager = new RoomManager(io);
+
+io.on('connection', socket => { 
+    socket.io = io
+    verifyTokenSocket(socket);
+    socket.on("disconnect", () => {
+        console.log(`On Disconnect: ${socket.userInfo.fullName}`);
     })
 });
 server.listen(process.env.PORT || '3000');
@@ -62,16 +67,11 @@ async function verifyTokenSocket(socket) {
             otherSocket.disconnect();
         }
 
-        //-----------------------------------------------------
+        //------------------------------------
         //Login thành công khởi tạo các control
         socket.userInfo = user;
         socket.emit('connect_verified', user);
-        // socket.tokenInfo = normalToken.decodeToken(accessToken)
-        // initSocketControl(socket)
-        // initChallengeFindTheSame(socket)
-        // //initChallengeGuessWord(socket)
-        // initCombineSocketControl(socket)
-        // socket.emit('ConnectManager', resultData)
+        new SocketControl(socket);
 
     } else {
         socket.disconnect();

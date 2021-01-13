@@ -4,6 +4,7 @@ var auth = require('../middleware/auth');
 
 var authController = require('../controller/auth-controller');
 var friendController = require('../controller/friend-controller');
+var conversationController = require('../controller/conversation-controller');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -18,8 +19,10 @@ router.post('/register', authController.register_post);
 
 router.post('/me', auth.verified, authController.me_post);
 
-router.post('/friends', auth.verified, friendController.postFriends);
+router.post('/friends', auth.verified, friendController.getFriends);
 
 router.post('/search-friend', auth.verified, friendController.searchFriends);
+
+router.post('/conversations', auth.verified, conversationController.getConversations);
 
 module.exports = router;
