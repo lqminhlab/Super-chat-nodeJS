@@ -13,6 +13,10 @@ router.get('/', function(req, res, next) {
 
 router.post('/login', authController.login_post);
 
+router.post('/loginFacebook', authController.login_facebook_post);
+
+router.post('/loginGoogle', authController.login_google_post);
+
 router.post('/register', authController.register_post);
 
 // ====== Auth=========

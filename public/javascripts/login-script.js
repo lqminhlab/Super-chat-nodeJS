@@ -1,8 +1,8 @@
 
-$(document).ready(function(){
-    const url = window.location.href; 
-    const urlOrigin = window.location.origin;  
+const url = window.location.href; 
+const urlOrigin = window.location.origin;  
 
+$(document).ready(function(){
     //Loading form
     $('.main').hide();
     setTimeout(()=>$(".loader-wrapper").fadeOut("slow", ()=>{

@@ -8,10 +8,12 @@ const chatFrame = $('#chat-frame');
 const inputSearch = $("#input-search");
 const btnSearch = $("#btn-search");
 
+//Global variable
 let conversations;
 let friends;
 let currentFriend;
 let socket;
+let user;
 
 $(document).ready(async function(){
 
@@ -19,7 +21,8 @@ $(document).ready(async function(){
         getProfile().then((res)=>{
             console.log("Get profile:", res);
             if(res && res.status && res.data){
-                userConnect(res.data);
+                user = res.data;
+                userConnect();
             }
             else
                 window.location.replace(`${urlOrigin}/login`);
@@ -29,7 +32,7 @@ $(document).ready(async function(){
     }
 });
 
-async function userConnect(user){
+async function userConnect(){
     $("#user-name").text(user.fullName);
     $('#user-avatar').attr('src', user.avatar);
 
@@ -65,6 +68,10 @@ async function userConnect(user){
         if(conversations.length != 0){
             conversations.forEach((index)=>{
                 conversationsIU.append(conversationHTML(index));
+                const _friend = index?.people?.find((index)=>{
+                    return index._id != user._id;
+                });
+                $(`#conversation-${index._id}`).click(()=>openChat(_friend));
             }); 
         }else{
             if(friends.length != 0){
@@ -75,25 +82,18 @@ async function userConnect(user){
         }
 
         $(".loader-wrapper").fadeOut("slow");   
-        registerActionView();   
-    });
-}
-
-const registerActionView = ()=>{
-    btnSearch.click(searchFriends);
-    $(document).on('keypress',function(e) {
-        if(e.which == 13) {
-            if(inputSearch.is(':focus'))
+        btnSearch.click(searchFriends);
+        $(document).on('keypress',function(e) {
+            if(e.which == 13 && inputSearch.is(':focus')) {
                 searchFriends();
-            else if($('#input-message').is(':focus'))
-                sendMessage();
-        }
+            }
+        });   
     });
-    $('#btn-send-message').click(sendMessage);
 }
 
 const sendMessage=  async()=>{
     const msg = $('#input-message').val();
+    if(!msg || msg.trim().length == 0) return;
     console.log({
         'msg': msg,
         'type' : 'text',
@@ -133,19 +133,36 @@ const startChat = (id)=>{
     currentFriend = friends.find((index)=>{
         return index._id == `${id}`;
     });
-    chatFrame.html(chatFrameHTML(currentFriend));
-    registerActionView();
+    chatFrame.html(chatFrameHTML());
+    
+    $(document).on('keypress',function(e) {
+        if(e.which == 13 && $('#input-message').is(':focus')) {
+            sendMessage();
+        }
+    });
+    $('#btn-send-message').click(sendMessage);
 }
 
-const chatFrameHTML = (friend)=>{
+const openChat =(_friend)=>{
+    currentFriend = _friend;
+    chatFrame.html(chatFrameHTML());
+    $(document).on('keypress',function(e) {
+        if(e.which == 13 && $('#input-message').is(':focus')) {
+            sendMessage();
+        }
+    });
+    $('#btn-send-message').click(sendMessage);
+}
+
+const chatFrameHTML = ()=>{
     return `<div class="card-header msg_head">
                 <div class="d-flex bd-highlight">
                     <div class="img_cont">
-                        <img src="${friend.avatar}" class="rounded-circle user_img">
+                        <img src="${currentFriend.avatar}" class="rounded-circle user_img">
                         <span class="online_icon"></span>
                     </div>
                     <div class="user_info">
-                        <span>${friend.fullName}</span>
+                        <span>${currentFriend.fullName}</span>
                         <p>online</p>
                     </div>
                 </div>
@@ -213,18 +230,28 @@ const friendHTML = (friend)=>{
 }
 
 const conversationHTML = (conversation)=>{
-    return `<li>
-                <div class="d-flex bd-highlight">
-                    <div class="img_cont">
-                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-                        <span class="online_icon"></span>
+    if(!conversation) return '';
+    if(conversation.type == 'normal'){
+        const _friend = conversation?.people?.find((index)=>{
+            return index._id != user._id;
+        });
+        const _lastMessage = conversation.last?.msg ?? `${_friend?.fullName} is Online`;
+        if(!_friend) return '';
+        return `<li>
+                    <div id="conversation-${conversation._id}" class="d-flex bd-highlight">
+                        <div class="img_cont">
+                            <img src="${_friend.avatar}" class="rounded-circle user_img">
+                            <span class="online_icon"></span>
+                        </div>
+                        <div class="user_info">
+                            <span>${_friend.fullName}</span>
+                            <p>${_lastMessage}</p>
+                        </div>
                     </div>
-                    <div class="user_info">
-                        <span>Khalid</span>
-                        <p>Kalid is online</p>
-                    </div>
-                </div>
-            </li>`;
+                </li>`;
+    }else{
+
+    }
 }
 
 const emptyConversationHTML = ()=>{

@@ -9,6 +9,7 @@
 
     <!-- Font Icon -->
     <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
+    <script src="https://apis.google.com/js/api:client.js"></script>
 
     <!-- Jquery -->
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
@@ -53,9 +54,8 @@
                         <div class="social-login">
                             <span class="social-label">Or login with</span>
                             <ul class="socials">
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-twitter"></i></a></li>
-                                <li><a href="#"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
+                                <li><a onclick="loginFacebook()"><i class="display-flex-center zmdi zmdi-facebook"></i></a></li>
+                                <li><a id="btn-signin-gg"><i class="display-flex-center zmdi zmdi-google"></i></a></li>
                             </ul>
                         </div>
                     </div>
@@ -66,7 +66,9 @@
     <div class="loader-wrapper">
         <span class="loader"><span class="loader-inner"></span></span>
     </div>
+
     <!-- JS -->
-  <script type="text/javascript" src="./javascripts/login-script.js"></script>
+    <script type="text/javascript" src="./javascripts/login-script.js"></script>
+    <script type="text/javascript" src="./javascripts/signin-social-script.js"></script>
 </body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>
